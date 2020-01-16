@@ -1,0 +1,54 @@
+import org.gradle.internal.os.OperatingSystem
+
+plugins {
+	id 'eclipse'
+    id 'java-gradle-plugin'
+    id 'com.gradle.plugin-publish' version '0.10.1'
+}
+
+project.ext.lwjglVersion = "3.2.3"
+
+switch (OperatingSystem.current()) {
+	case OperatingSystem.LINUX:
+		project.ext.lwjglNatives = "natives-linux"
+		break
+	case OperatingSystem.MAC_OS:
+		project.ext.lwjglNatives = "natives-macos"
+		break
+	case OperatingSystem.WINDOWS:
+		project.ext.lwjglNatives = "natives-windows"
+		break
+}
+
+version = "0.0.1"
+
+repositories {
+	mavenCentral()
+	maven { url = uri("https://repo.gradle.org/gradle/libs-releases") }
+}
+
+pluginBundle {
+	website = 'https://github.com/Isotropy-Studio/gradle-shaderc'
+	vcsUrl = 'https://github.com/Isotropy-Studio/gradle-shaderc.git'
+	tags = ['shaderc', 'shader', 'glsl']
+}
+
+gradlePlugin {
+	plugins {
+		gradletestPlugin {
+			id = 'org.isotropy.gradleshaderc'
+			displayName = 'Gradle-Shaderc'
+			description = 'A gradle task to compile shaders'
+			implementationClass = 'org.isotropy.gradleshaderc.GradleShadercPlugin'
+		}
+	}
+}
+
+dependencies {
+	implementation platform("org.lwjgl:lwjgl-bom:$lwjglVersion")
+
+	implementation "org.lwjgl:lwjgl"
+	implementation "org.lwjgl:lwjgl-shaderc"
+	runtimeOnly "org.lwjgl:lwjgl::$lwjglNatives"
+	runtimeOnly "org.lwjgl:lwjgl-shaderc::$lwjglNatives"
+}
