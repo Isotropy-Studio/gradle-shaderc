@@ -26,7 +26,7 @@ public abstract class GradleShaderc extends DefaultTask
 
 	@OutputDirectory
 	abstract DirectoryProperty getOutputDir();
-
+	
 	@TaskAction
 	void compileShader(InputChanges inputChanges)
 	{

@@ -11,6 +11,7 @@ import java.nio.file.Files;
 public final class ShadercCompiler implements AutoCloseable
 {
 	private static final String ENTRY_POINT_NAME = "main";
+
 	public final long compiler;
 	public final long options;
 
@@ -58,18 +59,23 @@ public final class ShadercCompiler implements AutoCloseable
 														options);
 
 		final int resultId = shaderc_result_get_compilation_status(result);
-		if (resultId != shaderc_compilation_status_success)
-		{
-			final var message = shaderc_result_get_error_message(result);
-			System.err.println("Compilation failed (" + resultId + "): " + fileName);
-			System.err.println(message);
-		}
-		else
+		if (resultId == shaderc_compilation_status_success)
 		{
 			final var buffer = shaderc_result_get_bytes(result);
 			writeResult(buffer, outputFile);
 		}
+		else
+		{
+			logError(fileName, result, resultId);
+		}
 		shaderc_result_release(result);
+	}
+
+	private static void logError(final String fileName, final long result, final int resultId)
+	{
+		final var message = shaderc_result_get_error_message(result);
+		System.err.println("Compilation failed (" + resultId + "): " + fileName);
+		System.err.println(message);
 	}
 
 	private static int findType(final String fileName)

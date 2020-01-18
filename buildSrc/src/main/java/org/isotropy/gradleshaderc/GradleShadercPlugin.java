@@ -8,6 +8,6 @@ public final class GradleShadercPlugin implements Plugin<Project>
 	@Override
 	public void apply(Project project)
 	{
-		project.getTasks().create("shadercCompile", GradleShaderc.class);
+		project.getTasks().register("shadercCompile", GradleShaderc.class);
 	}
 }

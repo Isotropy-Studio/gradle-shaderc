@@ -32,9 +32,9 @@ public class IncludeResolver implements ShadercIncludeResolveI
 			{
 				try
 				{
-					final String code = Files.readString(neighbor.toPath());
-					final var buffer = MemoryUtil.memUTF8(code, false);
-					result.content(buffer);
+					final var code = Files.readString(neighbor.toPath());
+					final var codeBuffer = MemoryUtil.memUTF8(code, false);
+					result.content(codeBuffer);
 					result.source_name(MemoryUtil.memByteBufferNT1(requested_source));
 				} catch (final IOException e)
 				{
