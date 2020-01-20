@@ -6,20 +6,6 @@ plugins {
 	id 'com.gradle.plugin-publish' version '0.10.1'
 }
 
-project.ext.lwjglVersion = "3.2.3"
-
-switch (OperatingSystem.current()) {
-	case OperatingSystem.LINUX:
-		project.ext.lwjglNatives = "natives-linux"
-		break
-	case OperatingSystem.MAC_OS:
-		project.ext.lwjglNatives = "natives-macos"
-		break
-	case OperatingSystem.WINDOWS:
-		project.ext.lwjglNatives = "natives-windows"
-		break
-}
-
 version = "0.0.1"
 
 repositories {
@@ -42,6 +28,20 @@ gradlePlugin {
 			implementationClass = 'org.isotropy.gradleshaderc.GradleShadercPlugin'
 		}
 	}
+}
+
+project.ext.lwjglVersion = "3.2.3"
+
+switch (OperatingSystem.current()) {
+	case OperatingSystem.LINUX:
+		project.ext.lwjglNatives = "natives-linux"
+		break
+	case OperatingSystem.MAC_OS:
+		project.ext.lwjglNatives = "natives-macos"
+		break
+	case OperatingSystem.WINDOWS:
+		project.ext.lwjglNatives = "natives-windows"
+		break
 }
 
 dependencies {
