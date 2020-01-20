@@ -2,8 +2,8 @@ import org.gradle.internal.os.OperatingSystem
 
 plugins {
 	id 'eclipse'
-    id 'java-gradle-plugin'
-    id 'com.gradle.plugin-publish' version '0.10.1'
+	id 'java-gradle-plugin'
+	id 'com.gradle.plugin-publish' version '0.10.1'
 }
 
 project.ext.lwjglVersion = "3.2.3"
@@ -24,7 +24,7 @@ version = "0.0.1"
 
 repositories {
 	mavenCentral()
-	maven { url = uri("https://repo.gradle.org/gradle/libs-releases") }
+	maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
 }
 
 pluginBundle {
