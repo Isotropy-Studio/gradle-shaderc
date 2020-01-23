@@ -1,12 +1,12 @@
-import org.gradle.internal.os.OperatingSystem
-
 plugins {
+	id 'maven-publish'
 	id 'eclipse'
 	id 'java-gradle-plugin'
 	id 'com.gradle.plugin-publish' version '0.10.1'
 }
 
-version = "0.0.1"
+version = "0.0.2"
+group = 'gradle.plugin.org.isotropy.gradleshaderc'
 
 repositories {
 	mavenCentral()
@@ -32,21 +32,13 @@ gradlePlugin {
 
 project.ext.lwjglVersion = "3.2.3"
 
-switch (OperatingSystem.current()) {
-	case OperatingSystem.LINUX:
-		project.ext.lwjglNatives = "natives-linux"
-		break
-	case OperatingSystem.MAC_OS:
-		project.ext.lwjglNatives = "natives-macos"
-		break
-	case OperatingSystem.WINDOWS:
-		project.ext.lwjglNatives = "natives-windows"
-		break
-}
-
 dependencies {
 	implementation "org.lwjgl:lwjgl:$lwjglVersion"
 	implementation "org.lwjgl:lwjgl-shaderc:$lwjglVersion"
-	runtimeOnly "org.lwjgl:lwjgl:$lwjglVersion:$lwjglNatives"
-	runtimeOnly "org.lwjgl:lwjgl-shaderc:$lwjglVersion:$lwjglNatives"
+	runtimeOnly "org.lwjgl:lwjgl:$lwjglVersion:natives-linux"
+	runtimeOnly "org.lwjgl:lwjgl:$lwjglVersion:natives-macos"
+	runtimeOnly "org.lwjgl:lwjgl:$lwjglVersion:natives-windows"
+	runtimeOnly "org.lwjgl:lwjgl-shaderc:$lwjglVersion:natives-linux"
+	runtimeOnly "org.lwjgl:lwjgl-shaderc:$lwjglVersion:natives-macos"
+	runtimeOnly "org.lwjgl:lwjgl-shaderc:$lwjglVersion:natives-windows"
 }
